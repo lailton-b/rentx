@@ -13,10 +13,7 @@ import {
 } from './styles';
 
 interface Props {
-  imagesUrl: {
-    id: string;
-    photo: string;
-  }[];
+  imagesUrl: string[];
 }
 
 interface ChangeImageProps {
@@ -35,16 +32,16 @@ export function ImageSlider({imagesUrl}: Props){
   return (
     <Container>
       <ImageIndexes>
-        <ImageIndex active={false} />
-        <ImageIndex active={false} />
-        <ImageIndex active={false} />
         <ImageIndex active={true} />
+        <ImageIndex active={false} />
+        <ImageIndex active={false} />
+        <ImageIndex active={false} />
       </ImageIndexes>
       
       <CarImageWrapper>
         <CarImage 
           source={{ 
-            uri: imagesUrl[0].photo        
+            uri: imagesUrl[0]      
           }}
           resizeMode="contain"            
         />
