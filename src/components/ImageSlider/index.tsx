@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { FlatList, ViewToken } from 'react-native';
+import { FlatList, Text, ViewToken } from 'react-native';
 import FastImage from 'react-native-fast-image'
 
 import { Bullet } from '../Bullet';
@@ -27,23 +27,36 @@ export function ImageSlider({imagesUrl}: Props){
   const indexChanged = useRef((info: ChangeImageProps) => {
     const index = info.viewableItems[0].index!;
     setImageIndex(index);
-  });
+  })
 
   return (
     <Container>
       <ImageIndexes>
-        <ImageIndex active={true} />
-        <ImageIndex active={false} />
-        <ImageIndex active={false} />
-        <ImageIndex active={false} />
+        {
+          imagesUrl.map((_, index) => (
+            <ImageIndex
+              key={"image-index-" + index}
+              active={imageIndex === index}
+            />
+          ))
+        }
       </ImageIndexes>
       
       <CarImageWrapper>
-        <CarImage 
-          source={{ 
-            uri: imagesUrl[0]      
-          }}
-          resizeMode="contain"            
+        <FlatList
+          data={imagesUrl}
+          keyExtractor={key => key}
+          renderItem={({ item }) => (
+            <CarImageWrapper>
+              <CarImage
+                source={{ uri: item }}
+                resizeMode="contain"
+              />
+            </CarImageWrapper>
+          )}
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          onViewableItemsChanged={indexChanged.current}
         />
       </CarImageWrapper>
     </Container>
